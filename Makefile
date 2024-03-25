@@ -1,13 +1,21 @@
-###################################################
-#
-# file: Makefile
-#
-# @Author:   Iacovos G. Kolokasis
-# @Version:  10-02-2022
-# @email:    kolokasis@csd.uoc.gr
-#
-# Makefile
-#
-####################################################
+CC = gcc
+CFLAGS = -Wall -ansi -pedantic
 
-all: list.exe hash.exe
+list: symtablelist.o testsymtab.o
+	$(CC) -o testsymtab testsymtab.o symtablelist.o
+
+hash: symtable.h symtablehash.o
+	$(CC) $(CFLAGS) -o testsymtab testsymtab.c symtablehash.o
+
+symtablehash.o: symtable.h symtablehash.c
+	$(CC) $(CFLAGS) -c symtablehash.c
+
+symtablelist.o: symtable.h symtablelist.c
+	$(CC) $(CFLAGS) -c symtablelist.c
+
+testsymtab.o: symtable.h testsymtab.c
+	$(CC) $(CFLAGS) -c testsymtab.c
+
+clean:
+	rm -rf *.o
+	rm -rf testsymtab.exe
